@@ -14,21 +14,21 @@ const BodySingle: FC<BodySingleProps> = ({
   children,
 }: BodySingleProps) => {
   return (
-    <Container maxWidth="xl" {...containerProps}>
-      <Stack direction={"column"} display={"flex"} justifyContent={"center"}>
-        {title && (
-          <Typography
-            variant={"h2"}
-            my={2}
-            textAlign={"center"}
-            fontSize={28}
-            fontWeight={600}
-          >
-            {title}
-          </Typography>
-        )}
-        {children}
-      </Stack>
+    <Container maxWidth="xl" {...containerProps}>        
+        <Stack direction={"column"} display={"flex"} justifyContent={"center"}>
+          {title && (
+            <Typography
+              variant={"h2"}
+              my={2}
+              textAlign={"center"}
+              fontSize={28}
+              fontWeight={600}
+            >
+              {title}
+            </Typography>
+          )}
+          {children}
+        </Stack>      
     </Container>
   );
 };
