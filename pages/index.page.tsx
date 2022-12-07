@@ -12,10 +12,10 @@ export async function getStaticProps(){
   }
 }
 
-const Index: NextPage = (props) => { 
+const Index: NextPage = (props: any) => { 
   // @ts-ignore
   const { comicsData } = props;
-  // console.log(comicsData);
+  console.log(comicsData);
   return (
     <>
       <Head>
