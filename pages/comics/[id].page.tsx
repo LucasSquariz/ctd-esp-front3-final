@@ -14,7 +14,7 @@ export const getStaticPaths = async () => {
 }
 
 export async function getStaticProps({ params }: any) {
-    const data = await getComic(params.id)
+    const data = await getComic(Number(params.id))
     return {
         props: {
             data
@@ -29,7 +29,7 @@ export default function comicDetails(props: any) {
     const images = comicProps.data?.images[0];
     console.log(comicProps)
     return (
-        <>            
+        <>
             <Card sx={{ display: 'flex' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <CardContent sx={{ flex: '1 0 auto' }}>
@@ -55,16 +55,13 @@ export default function comicDetails(props: any) {
                     </Box>
                     <Box>
                         {comicProps.data?.stock > 0
-                            ? <Typography>
-                                {`Estoque: ${comicProps.data?.stock}`}
-                            </Typography>
+                            ? <CardActions>
+                                <Button size="small" color="primary">Comprar</Button>
+                            </CardActions>
                             : <Typography>
                                 Sem estoque
-                            </Typography>}                        
-                    </Box>
-                    <CardActions>
-                        <Button size="small" color="primary">Comprar</Button>
-                    </CardActions>
+                            </Typography>}
+                    </Box>                    
                 </Box>
             </Card>
         </>
