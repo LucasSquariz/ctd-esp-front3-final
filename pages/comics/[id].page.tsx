@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Container, Typography } from "@mui/material";
 import { getComic } from "dh-marvel/services/marvel/marvel.service";
 import Head from "next/head";
 import Link from "next/link";
@@ -15,7 +15,7 @@ export const getStaticPaths = async () => {
 }
 
 export async function getStaticProps({ params }: any) {
-    const data = await getComic(Number(params.id));     
+    const data = await getComic(Number(params.id));
     return {
         props: {
             data
@@ -25,11 +25,10 @@ export async function getStaticProps({ params }: any) {
 
 export default function comicDetails(props: any) {
     const comicProps = props;
-    const images = comicProps.data?.images[0];    
-    const characters = comicProps?.data?.characters?.items
-    console.log(characters)
+    const images = comicProps.data?.images[0];
+    const characters = comicProps?.data?.characters?.items;
     return (
-        <>
+        <Container>
             <Head>
                 <title>Marvel - Comic</title>
             </Head>
@@ -71,10 +70,14 @@ export default function comicDetails(props: any) {
             <Box>
                 <Typography>Personagens: </Typography>
                 {characters && characters.map((char: any) => (
-                    <Typography key={char.name}>{char.name}</Typography>
-                        ))}
+                    <>
+                        <Link href={`/characters/${char.resourceURI.split('characters/').pop()}`}>
+                            <Typography key={char.name}>{char.name}</Typography>
+                        </Link>
+                    </>
+                ))}
             </Box>
-        </>
+        </Container>
 
     )
 }

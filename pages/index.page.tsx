@@ -6,7 +6,7 @@ import { getComics } from "dh-marvel/services/marvel/marvel.service";
 import { Grid, Card, CardActionArea, Typography, CardMedia, CardContent, CardActions, Button, styled, Paper, Pagination } from "@mui/material";
 import Link from "next/link";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const comicsData = await getComics((12), 12);
   return {
     props: {
