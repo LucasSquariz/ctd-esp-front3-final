@@ -70,11 +70,12 @@ export default function comicDetails(props: any) {
             </Card>
             <Box>
                 <Typography>Personagens: </Typography>
-                {characters && characters.map((char: any) => {
+                {characters && characters.map((char: any) => (
                     <Typography key={char.name}>{char.name}</Typography>
-                })}
+                        ))}
             </Box>
         </>
 
     )
 }
+
