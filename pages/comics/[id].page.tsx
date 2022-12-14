@@ -33,8 +33,8 @@ export default function comicDetails(props: any) {
                 <title>Marvel - Comic</title>
             </Head>
             <Card sx={{ display: 'flex' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
+                <Container sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <CardContent >
                         <Typography
                             gutterBottom
                             variant="h5"
@@ -48,37 +48,37 @@ export default function comicDetails(props: any) {
                             alt={comicProps?.title}
                         />
                     </CardContent>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-                    <Box>
-                        <Typography>
-                            {`R$${comicProps.data?.price}`}
-                        </Typography>
-                    </Box>
-                    <Box>
-                        {comicProps.data?.stock > 0
-                            ? <CardActions>
-                                <Button size="small" color="primary">Comprar</Button>
-                            </CardActions>
-                            : <Typography>
-                                Sem estoque
-                            </Typography>}
-                    </Box>
-                </Box>
-
+                </Container>
+                <Container sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+                    <Container>
+                        <Container>
+                            <Typography>
+                                {`R$${comicProps.data?.price}`}
+                            </Typography>
+                        </Container>
+                        <Container>
+                            {comicProps.data?.stock > 0
+                                ? <CardActions>
+                                    <Button size="small" color="primary">Comprar</Button>
+                                </CardActions>
+                                : <Typography>
+                                    Sem estoque
+                                </Typography>}
+                        </Container>
+                        <Container>
+                            <Typography>Personagens: </Typography>
+                            {characters && characters.map((char: any) => (
+                                <>
+                                    <Link href={`/characters/${char.resourceURI.split('characters/').pop()}`}>
+                                        <Button key={char.name} >{char.name}</Button>
+                                    </Link>
+                                </>
+                            ))}
+                        </Container>
+                    </Container>
+                </Container>
             </Card>
-            <Box>
-                <Typography>Personagens: </Typography>
-                {characters && characters.map((char: any) => (
-                    <>
-                        <Link href={`/characters/${char.resourceURI.split('characters/').pop()}`}>
-                            <Typography key={char.name}>{char.name}</Typography>
-                        </Link>
-                    </>
-                ))}
-            </Box>
         </Container>
-
     )
 }
 

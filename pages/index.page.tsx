@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useContext } from "react";
 import Head from "next/head";
 import { getComics } from "dh-marvel/services/marvel/marvel.service";
-import { Grid, Card, CardActionArea, Typography, CardMedia, CardContent, CardActions, Button, styled, Paper, Pagination } from "@mui/material";
+import { Grid, Card, CardActionArea, Typography, CardMedia, CardContent, CardActions, Button, styled, Paper, Pagination, Container } from "@mui/material";
 import Link from "next/link";
 
 export async function getServerSideProps() {
@@ -38,13 +38,13 @@ const Index: NextPage = (props: any) => {
   const { comicsData } = props;
   // console.log(comicsData)
   return (
-    <>
+    <Container sx={{ marginTop: '50px' }}>
       <Head>
         <title>Marvel</title>
       </Head>
-      <Grid container spacing={2}>
+      <Grid sx={{ justifyContent: 'center' }} container spacing={2}>
         {comicsData.data.results.map((comic: any) => (
-          <Grid key={comic.id} >
+          <Grid key={comic.id} xs={4} item >
             <Card sx={{ maxWidth: 345 }}>
               <CardActionArea>
                 <CardMedia
@@ -75,12 +75,14 @@ const Index: NextPage = (props: any) => {
             </Card>
           </Grid>
         ))}
-        <Link href={`/${page}`}>
-          {/* @ts-ignore      */}
-          <Pagination count={10} onClick={e => setPage(+e.target.innerText)} />
-        </Link>
+        <Container sx={{margin:'30px 0'}}>
+          <Link href={`/${page}`}>
+            {/* @ts-ignore      */}
+            <Pagination count={10} onClick={e => setPage(+e.target.innerText)} />
+          </Link>
+        </Container>
       </Grid>
-    </>
+    </Container>
   );
 };
 
