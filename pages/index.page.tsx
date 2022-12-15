@@ -3,10 +3,10 @@ import React from "react";
 import { useState, useContext } from "react";
 import Head from "next/head";
 import { getComics } from "dh-marvel/services/marvel/marvel.service";
-import { Grid, Card, CardActionArea, Typography, CardMedia, CardContent, CardActions, Button, styled, Paper, Pagination, Container } from "@mui/material";
+import { Grid, Card, CardActionArea, Typography, CardMedia, CardContent, CardActions, Button, Pagination, Container } from "@mui/material";
 import Link from "next/link";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const comicsData = await getComics((12), 12);
   return {
     props: {
@@ -67,7 +67,9 @@ const Index: NextPage = (props: any) => {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button size="small" color="primary">Comprar</Button>
+                <Link href={`/checkout/${comic.id}`}>
+                  <Button size="small" color="primary">Comprar</Button>
+                </Link>
                 <Link href={`/comics/${comic.id}`}>
                   <Button size="small">Ver detalhes</Button>
                 </Link>
@@ -75,7 +77,7 @@ const Index: NextPage = (props: any) => {
             </Card>
           </Grid>
         ))}
-        <Container sx={{margin:'30px 0'}}>
+        <Container sx={{ margin: '30px 0' }}>
           <Link href={`/${page}`}>
             {/* @ts-ignore      */}
             <Pagination count={10} onClick={e => setPage(+e.target.innerText)} />

@@ -52,27 +52,54 @@ export default function comicDetails(props: any) {
                 <Container sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
                     <Container>
                         <Container>
-                            <Typography>
+                            <Typography
+                                gutterBottom
+                                noWrap
+                                variant="h3"
+                                component="div"
+                                align="center"
+                            > Preço
+                            </Typography>
+                            <Typography
+                                gutterBottom
+                                noWrap
+                                variant="h5"
+                                component="div"
+                                align="center">
                                 {`R$${comicProps.data?.price}`}
                             </Typography>
                         </Container>
                         <Container>
                             {comicProps.data?.stock > 0
                                 ? <CardActions>
-                                    <Button size="small" color="primary">Comprar</Button>
+                                    <Link href={`/checkout/${comicProps.data?.id}`}>
+                                        <Button
+                                            size="small"
+                                            color="primary"
+                                        >Comprar
+                                        </Button>
+                                    </Link>
                                 </CardActions>
                                 : <Typography>
                                     Sem estoque
                                 </Typography>}
                         </Container>
                         <Container>
-                            <Typography>Personagens: </Typography>
+                            <Typography
+                                gutterBottom
+                                noWrap
+                                variant="h4"
+                                component="div"
+                                align="center"
+                            >
+                                Personagens:
+                            </Typography>
                             {characters && characters.map((char: any) => (
-                                <>
+                                <Container key={char.resourceURI.split('characters/').pop()}>
                                     <Link href={`/characters/${char.resourceURI.split('characters/').pop()}`}>
-                                        <Button key={char.name} >{char.name}</Button>
+                                        <Button >{char.name}</Button>
                                     </Link>
-                                </>
+                                </Container>
                             ))}
                         </Container>
                     </Container>
