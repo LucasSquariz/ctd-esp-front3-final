@@ -49,7 +49,7 @@ export default function checkout(props: any) {
                                 </Typography>
                                 <FormControl sx={{ marginTop: '10px' }}>
                                     <InputLabel htmlFor="name">Nome</InputLabel>
-                                    <Input id="name" aria-describedby="name" {...register('firstName')} />
+                                    <Input id="name" aria-describedby="name" {...register('firstName')} />                                    
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
                                     <InputLabel htmlFor="lastName">Sobrenome</InputLabel>
@@ -119,7 +119,7 @@ export default function checkout(props: any) {
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
                                     <InputLabel htmlFor="my-input">Código de segurança</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('cardCvc')} />
+                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('cardCvv')} />
                                 </FormControl>
                             </Grid>
                         </Grid>

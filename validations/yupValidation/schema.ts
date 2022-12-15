@@ -13,13 +13,8 @@ export const schema = Yup.object().shape({
     state: Yup.string().required(),
     cardNumber: Yup.string().required(),
     cardName: Yup.string().required(),
-    cardExpDate: Yup.string()
-        .required()
+    cardExpDate: Yup.string().required()
         .matches(/(0[1-9]|10|11|12)[/](20\d{2})/, 'Validade incorreta')
-        .min(
-            7,
-            'Data de validade deve conter mês com 2 dígitos e ano com 4 dígitos',
-        ),
-    cardCvc: Yup.string().max(3).min(3).required(),
-
+        .min(7,'Data de validade deve conter mês com 2 dígitos e ano com 4 dígitos',),
+    cardCvv: Yup.string().max(3).min(3).required()
 })
