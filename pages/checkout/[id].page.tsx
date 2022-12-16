@@ -42,8 +42,7 @@ export default function Checkout(props: PropsDetails) {
         resolver: yupResolver(schema)
     });
 
-    const comicDetails = props;
-    const images = comicDetails.data?.images[0];
+    const comicDetails = props;    
     const { mutate: createCheckout } = useCheckout();
     const router = useRouter();    
     const { registerCheckout, registerOrder } = useCheckoutDispatch();
@@ -391,7 +390,7 @@ export default function Checkout(props: PropsDetails) {
                     <CardContent >
                         <CardMedia
                             component="img"
-                            image={`${images?.path}.${images?.extension}`}
+                            image={`${comicDetails?.data?.thumbnail?.path}.${comicDetails?.data?.thumbnail?.extension}`}
                             alt={comicDetails?.title}
                         />
                         <Typography

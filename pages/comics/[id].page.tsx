@@ -25,8 +25,7 @@ export async function getStaticProps({ params }: any) {
 
 export default function comicDetails(props: any) {
     const comicProps = props;    
-    const characters = comicProps?.data?.characters?.items;  
-    console.log(comicProps)  
+    const characters = comicProps?.data?.characters?.items;        
     return (
         <Container>
             <Head>

@@ -34,19 +34,19 @@ export default function handler(
   }
   try {
     const body: CheckoutInput = req.body;
-    if (body.customer.address.address2 === invalidAddress) {
+    if (body.customer.address.addressComp === invalidAddress) {
       res.status(400).json(ERROR_INCORRECT_ADDRESS);
       return;
     }
-    if (body.card.number === withoutFundsCard) {
+    if (body.card.cardNumber === withoutFundsCard) {
       res.status(400).json(ERROR_CARD_WITHOUT_FUNDS);
       return;
     }
-    if (body.card.number === withoutAuthorizationCard) {
+    if (body.card.cardNumber === withoutAuthorizationCard) {
       res.status(400).json(ERROR_CARD_WITHOUT_AUTHORIZATION);
       return;
     }
-    if (body.card.number === validCard) {
+    if (body.card.cardNumber === validCard) {
       res.status(200).json({ data: body });
       return;
     }

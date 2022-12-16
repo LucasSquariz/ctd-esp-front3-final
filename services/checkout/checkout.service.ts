@@ -9,22 +9,24 @@ export async function createCheckout(data: FormData) {
             '/api/checkout',
             {
                 customer: {
-                    name: data.name,
-                    lastname: data.lastname,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
                     email: data.email,
                     address: {
-                        address1: data.address1,
-                        address2: data.address2,
+                        addressStreet: data.addressStreet,
+                        addressDistrict: data.addressDistrict,
+                        addressNumber: data.addressNumber,
+                        addressComp: data.addressComp,
                         city: data.city,
                         state: data.state,
                         zipCode: data.zipCode,
                     }
                 },
                 card: {
-                    number: data.number,
-                    cvc: data.cvc,
-                    expDate: data.expDate,
-                    nameOnCard: data.nameOnCard,
+                    cardNumber: data.cardNumber,
+                    cardCvv: data.cardCvv,
+                    cardExpDate: data.cardExpDate,
+                    cardName: data.cardName,
                 }
             }
         )

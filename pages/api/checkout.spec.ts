@@ -20,7 +20,7 @@ describe("Checkout", () => {
     it("should return a 400 error", async () => {
       const order = {
         customer: { address: {} },
-        card: { number: validCard },
+        card: { cardNumber: validCard },
       } as CheckoutInput;
       const { req, res } = createMocks({
         method: "POST",
@@ -50,7 +50,7 @@ describe("Checkout", () => {
       const { req, res } = createMocks({
         method: "POST",
         body: {
-          customer: { address: { address2: invalidAddress } },
+          customer: { address: { addressComp: invalidAddress } },
         } as CheckoutInput,
       });
       await handleCheckout(req, res);
@@ -79,7 +79,7 @@ describe("Checkout", () => {
         method: "POST",
         body: {
           customer: { address: {} },
-          card: { number: withoutFundsCard },
+          card: { cardNumber: withoutFundsCard },
         } as CheckoutInput,
       });
       await handleCheckout(req, res);
@@ -95,7 +95,7 @@ describe("Checkout", () => {
         method: "POST",
         body: {
           customer: { address: {} },
-          card: { number: withoutAuthorizationCard },
+          card: { cardNumber: withoutAuthorizationCard },
         } as CheckoutInput,
       });
       await handleCheckout(req, res);
@@ -111,7 +111,7 @@ describe("Checkout", () => {
         method: "POST",
         body: {
           customer: { address: {} },
-          card: { number: "4111" },
+          card: { cardNumber: "4111" },
         } as CheckoutInput,
       });
       await handleCheckout(req, res);

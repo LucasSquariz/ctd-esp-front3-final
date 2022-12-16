@@ -1,20 +1,22 @@
 export type FormData = {
-    name: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     email: string;
-    address1: string;
-    address2?: string | null;
+    addressStreet: string;
+    addressDistrict: string;
+    addressNumber: string;
+    addressComp?: string | null;
     city: string;
     state: string;
     zipCode: string;
-    number: string;
-    cvc: string;
-    expDate: string;
-    nameOnCard: string;
+    cardNumber: string;
+    cardCvv: string;
+    cardExpDate: string;
+    cardName: string;
 }
 
 export type Comic = {
-    images: any;
+    images?: any;
     id: string;
     title: string;
     thumbnail: {
