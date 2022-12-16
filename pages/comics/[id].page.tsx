@@ -24,9 +24,9 @@ export async function getStaticProps({ params }: any) {
 }
 
 export default function comicDetails(props: any) {
-    const comicProps = props;
-    const images = comicProps.data?.images[0];
-    const characters = comicProps?.data?.characters?.items;
+    const comicProps = props;    
+    const characters = comicProps?.data?.characters?.items;  
+    console.log(comicProps)  
     return (
         <Container>
             <Head>
@@ -44,7 +44,7 @@ export default function comicDetails(props: any) {
                         </Typography>
                         <CardMedia
                             component="img"
-                            image={`${images?.path}.${images?.extension}`}
+                            image={`${comicProps?.data?.thumbnail?.path}.${comicProps?.data?.thumbnail?.extension}`}
                             alt={comicProps?.title}
                         />
                     </CardContent>
