@@ -30,8 +30,7 @@ export async function createCheckout(data: FormData) {
         )
 
         return response;
-    } catch (e: any) {
-        console.log(e);
+    } catch (e: any) {        
         if (e.response.data.message === "The card doesn't have the require amount to do the transfer") {
             Swal.fire({
                 icon: 'error',

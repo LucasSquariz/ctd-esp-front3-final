@@ -18,7 +18,7 @@ const Index: NextPage = () => {
       allowOutsideClick: false,      
     })  
   }
-
+ 
   return (
     <Container sx={{ marginTop: '50px' }}>
       <Head>
