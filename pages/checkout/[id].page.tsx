@@ -1,4 +1,4 @@
-import { Container, FormControl, Button, Input, InputLabel, Typography, Stack, CardContent, CardMedia, Grid } from "@mui/material";
+import { Container, FormControl, Button, Input, InputLabel, Typography, Stack, CardContent, CardMedia, Grid, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from "../../shared/yupValidation/schema";
@@ -6,8 +6,11 @@ import { getComic } from "dh-marvel/services/marvel/marvel.service";
 import { Comic } from "shared/types/types";
 import { useRouter } from "next/router";
 import { useCheckout } from "dh-marvel/services/checkout/checkout.service";
-import { useCheckoutDispatch, useCheckoutState } from "../../context/context";
+import { useCheckoutDispatch } from "../../context/context";
 import Swal from "sweetalert2";
+import { creditCardExpFormatter } from "../../util/formatters/creditCardExpFormatter";
+import { creditCardFormatter } from "../../util/formatters/creditCardFormatter";
+import { cepFormatter } from "../../util/formatters/cepFormatter";
 
 export const getStaticPaths = async () => {
     return {
@@ -34,17 +37,16 @@ type PropsDetails = {
     data: Comic
 }
 
-export default function Checkout(props: PropsDetails) {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+export default function Checkout(props: PropsDetails) {    
+    const { register, handleSubmit,setValue, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
 
     const comicDetails = props;
     const images = comicDetails.data?.images[0];
-    const { mutate: createCheckout } = useCheckout()
-    const router = useRouter()
-    const { checkout } = useCheckoutState()
-    const { registerCheckout, registerOrder } = useCheckoutDispatch()
+    const { mutate: createCheckout } = useCheckout();
+    const router = useRouter();    
+    const { registerCheckout, registerOrder } = useCheckoutDispatch();
 
     const onCheckoutSubmit = (data: any) => {
         createCheckout(data, {
@@ -62,8 +64,7 @@ export default function Checkout(props: PropsDetails) {
                     path: comicDetails?.data?.thumbnail?.path,
                     extension: comicDetails?.data?.thumbnail?.extension
                 })
-                router.push('successfulorder')
-                console.log(checkout)
+                router.push('successfulorder')                
             }
         })
     }
@@ -83,8 +84,13 @@ export default function Checkout(props: PropsDetails) {
                                     Dados pessoais
                                 </Typography>
                                 <FormControl sx={{ marginTop: '10px' }}>
-                                    <InputLabel htmlFor="name">Nome</InputLabel>
-                                    <Input id="name" aria-describedby="name" {...register('firstName')} />
+                                    <TextField
+                                        id="firstName"
+                                        label="Nome"
+                                        variant="outlined"
+                                        error={!!errors?.firstName?.message}
+                                        {...register("firstName")}
+                                    />
                                     {errors.firstName?.message ?
                                         <Typography
                                             color="red"
@@ -98,8 +104,12 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="lastName">Sobrenome</InputLabel>
-                                    <Input id="lastName" aria-describedby="my-helper-text" {...register('lastName')} />
+                                    <TextField
+                                        id="lastName"
+                                        label="Sobrenome"
+                                        variant="outlined"
+                                        error={!!errors?.lastName?.message}
+                                        {...register("lastName")} />
                                     {errors.lastName?.message ?
                                         <Typography
                                             color="red"
@@ -113,8 +123,12 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">Email address</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('email')} />
+                                    <TextField
+                                        id="email"
+                                        label="Email"
+                                        variant="outlined"
+                                        error={!!errors?.email?.message}
+                                        {...register("email")} />
                                     {errors.email?.message ?
                                         <Typography
                                             color="red"
@@ -137,8 +151,12 @@ export default function Checkout(props: PropsDetails) {
                                     Endereço de entrega
                                 </Typography>
                                 <FormControl sx={{ marginTop: '10px' }}>
-                                    <InputLabel htmlFor="my-input">Rua</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('addressStreet')} />
+                                    <TextField
+                                        id="addressStreet"
+                                        label="Rua"
+                                        variant="outlined"
+                                        error={!!errors?.addressStreet?.message}
+                                        {...register("addressStreet")} />
                                     {errors.addressStreet?.message ?
                                         <Typography
                                             color="red"
@@ -152,8 +170,12 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">Bairro</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('addressDistrict')} />
+                                    <TextField
+                                        id="addressDistrict"
+                                        label="Bairro"
+                                        variant="outlined"
+                                        error={!!errors?.addressDistrict?.message}
+                                        {...register("addressDistrict")} />
                                     {errors.addressDistrict?.message ?
                                         <Typography
                                             color="red"
@@ -167,8 +189,12 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">Numero</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('addressNumber')} />
+                                    <TextField
+                                        id="addressNumber"
+                                        label="Número"
+                                        variant="outlined"
+                                        error={!!errors?.addressNumber?.message}
+                                        {...register("addressNumber")} />
                                     {errors.addressNumber?.message ?
                                         <Typography
                                             color="red"
@@ -182,12 +208,23 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">Complemento</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('addressComp')} />
+                                    <TextField
+                                        id="addressComp"
+                                        label="Complemento"
+                                        variant="outlined"
+                                        {...register("addressComp")} />
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">CEP</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('zipCode')} />
+                                    <TextField
+                                        id="zipCode"
+                                        label="CEP"
+                                        variant="outlined"
+                                        error={!!errors?.zipCode?.message}
+                                        {...register("zipCode", {
+                                            onChange: e => {
+                                                setValue('zipCode', cepFormatter(e.target.value));
+                                            },
+                                        })} />
                                     {errors.zipCode?.message ?
                                         <Typography
                                             color="red"
@@ -201,8 +238,12 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">Cidade</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('city')} />
+                                    <TextField
+                                        id="city"
+                                        label="Cidade"
+                                        variant="outlined"
+                                        error={!!errors?.city?.message}
+                                        {...register("city")} />
                                     {errors.city?.message ?
                                         <Typography
                                             color="red"
@@ -216,8 +257,12 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">Estado</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('state')} />
+                                    <TextField
+                                        id="state"
+                                        label="Estado"
+                                        variant="outlined"
+                                        error={!!errors?.state?.message}
+                                        {...register("state")} />
                                     {errors.state?.message ?
                                         <Typography
                                             color="red"
@@ -240,8 +285,16 @@ export default function Checkout(props: PropsDetails) {
                                     Dados de pagamento
                                 </Typography>
                                 <FormControl sx={{ marginTop: '10px' }}>
-                                    <InputLabel htmlFor="my-input">Numero do cartão</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('cardNumber')} />
+                                    <TextField
+                                        id="cardNumber"
+                                        label="Número do cartão"
+                                        variant="outlined"
+                                        error={!!errors?.cardNumber?.message}
+                                        {...register("cardNumber", {
+                                            onChange: e => {
+                                                setValue('cardNumber', creditCardFormatter(e.target.value));
+                                            },
+                                        })} />
                                     {errors.cardNumber?.message ?
                                         <Typography
                                             color="red"
@@ -255,8 +308,12 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">Nome no cartão</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('cardName')} />
+                                    <TextField
+                                        id="cardName"
+                                        label="Nome no cartão"
+                                        variant="outlined"
+                                        error={!!errors?.cardName?.message}
+                                        {...register("cardName")} />
                                     {errors.cardName?.message ?
                                         <Typography
                                             color="red"
@@ -270,8 +327,16 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">Data de validade</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('cardExpDate')} />
+                                    <TextField
+                                        id="cardExpDate"
+                                        label="Data de validade"
+                                        variant="outlined"
+                                        error={!!errors?.cardExpDate?.message}
+                                        {...register("cardExpDate", {
+                                            onChange: e => {
+                                                setValue('cardExpDate', creditCardExpFormatter(e.target.value));
+                                            },
+                                        })} />
                                     {errors.cardExpDate?.message ?
                                         <Typography
                                             color="red"
@@ -285,8 +350,12 @@ export default function Checkout(props: PropsDetails) {
                                         : ''}
                                 </FormControl>
                                 <FormControl sx={{ margin: '6px 0' }}>
-                                    <InputLabel htmlFor="my-input">Código de segurança</InputLabel>
-                                    <Input id="my-input" aria-describedby="my-helper-text" {...register('cardCvv')} />
+                                    <TextField
+                                        id="cardCvv"
+                                        label="Código de segurança"
+                                        variant="outlined"
+                                        error={!!errors?.cardCvv?.message}
+                                        {...register("cardCvv")} />
                                     {errors.cardCvv?.message ?
                                         <Typography
                                             color="red"
@@ -298,7 +367,8 @@ export default function Checkout(props: PropsDetails) {
                                             {`${errors.cardCvv?.message}`}
                                         </Typography>
                                         : ''}
-                                </FormControl>
+                                </FormControl>                                   
+
                             </Grid>
                         </Grid>
                         <Button
