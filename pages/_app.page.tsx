@@ -4,6 +4,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import LayoutGeneral from "dh-marvel/components/layouts/layout-general";
 import { theme } from "dh-marvel/styles/material-theme";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { CheckoutProvider } from "context/Provider";
 
 function MyApp({ Component, pageProps }: AppProps) {
 
@@ -23,7 +24,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <LayoutGeneral>
-          <Component {...pageProps} />
+          <CheckoutProvider>
+            <Component {...pageProps} />
+          </CheckoutProvider>
         </LayoutGeneral>
         <style jsx global>{`
         /* Other global styles such as 'html, body' etc... */

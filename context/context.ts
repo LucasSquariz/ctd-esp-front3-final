@@ -22,7 +22,6 @@ export const useCheckoutState = () => {
     if (!context) {
         throw new Error('useCheckoutState must be used within a AuthProvider');
     }
-
     return context;
 };
 
@@ -33,6 +32,5 @@ export const useCheckoutDispatch = () => {
             'useCheckoutDispatch must be used within a AuthProvider',
         );
     }
-
     return context;
 };

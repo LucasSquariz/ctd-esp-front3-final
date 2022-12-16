@@ -1,7 +1,7 @@
 import Yup from "./yup";
 
 export const schema = Yup.object().shape({
-    name: Yup.string().required(),
+    firstName: Yup.string().required(),
     lastName: Yup.string().required(),
     email: Yup.string().email('Formato de email inválido').required(),
     addressStreet: Yup.string().required(),
