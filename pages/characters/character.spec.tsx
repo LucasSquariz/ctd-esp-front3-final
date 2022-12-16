@@ -10,8 +10,8 @@ describe("CharacterDetails", () => {
                     <CharacterDetail data={character} />
                 );
 
-                const title = screen.getByText(/Apocalypse/i);
-                const description = screen.getByText(/Apocalypse/i);
+                const title = screen.getByText(/Storm/i);
+                const description = screen.getByText(/Ororo Monroe is the descendant of an ancient line of African priestesses, all of whom have white hair, blue eyes, and the potential to wield magic./i);
 
                 await waitFor(() => {
                     expect(title).toBeInTheDocument()

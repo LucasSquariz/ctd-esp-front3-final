@@ -9,21 +9,30 @@ import Link from "next/link";
 const Index: NextPage = () => {
   const { data, fetchPageComics, isLoading } = useGetComicsPagination();
   const limitPage = Math.round(data?.data?.total / 12) - 1;
-  
+
   const showLoading = function () {
     Swal.fire({
       title: 'Carregando',
       timer: 2000,
       allowEscapeKey: false,
-      allowOutsideClick: false,      
-    })  
+      allowOutsideClick: false,
+    })
   }
- 
+
   return (
     <Container sx={{ marginTop: '50px' }}>
       <Head>
         <title>Marvel</title>
       </Head>
+      <Container sx={{textAlign:'center'}}>
+        <Typography
+          gutterBottom
+          variant="h2"
+          component="div"
+        >
+          Marvel Comics
+        </Typography>
+      </Container>
       <Grid sx={{ justifyContent: 'center' }} container spacing={2}>
         {isLoading
           ? (<>{showLoading()}</>)
