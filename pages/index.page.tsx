@@ -1,49 +1,25 @@
 import type { NextPage } from "next";
 import React from "react";
-import { useState, useContext } from "react";
 import Head from "next/head";
+import { useGetComicsPagination } from "dh-marvel/services/marvel/useGetComicsPagination";
 import { getComics } from "dh-marvel/services/marvel/marvel.service";
 import { Grid, Card, CardActionArea, Typography, CardMedia, CardContent, CardActions, Button, Pagination, Container } from "@mui/material";
 import Link from "next/link";
 
-export async function getStaticProps() {
-  const comicsData = await getComics((12), 12);
-  return {
-    props: {
-      comicsData
-    }
-  }
-}
 
-const changePage = async (page: number) => {
-  const comicsData = await getComics((page * 12), 12);
-  return {
-    props: {
-      comicsData
-    }
-  }
-}
 
-// const Item = styled(Paper)(({ theme }) => ({
-//   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-//   ...theme.typography.body2,
-//   padding: theme.spacing(1),
-//   textAlign: 'center',
-//   color: theme.palette.text.secondary,
-// }));
-
-const Index: NextPage = (props: any) => {
-  const [page, setPage] = useState(1);
+const Index: NextPage = () => {
+  const { data, fetchPageComics, isLoading } = useGetComicsPagination();
+  const limitPage = Math.round(data?.data?.total / 12) - 1;
   // @ts-ignore
-  const { comicsData } = props;
-  // console.log(comicsData)
+    
   return (
     <Container sx={{ marginTop: '50px' }}>
       <Head>
         <title>Marvel</title>
       </Head>
       <Grid sx={{ justifyContent: 'center' }} container spacing={2}>
-        {comicsData.data.results.map((comic: any) => (
+        {data?.data?.results.map((comic: any) => (
           <Grid key={comic.id} xs={4} item >
             <Card sx={{ maxWidth: 345 }}>
               <CardActionArea>
@@ -77,11 +53,9 @@ const Index: NextPage = (props: any) => {
             </Card>
           </Grid>
         ))}
-        <Container sx={{ margin: '30px 0' }}>
-          <Link href={`/${page}`}>
+        <Container sx={{ margin: '30px 0' }}>          
             {/* @ts-ignore      */}
-            <Pagination count={10} onClick={e => setPage(+e.target.innerText)} />
-          </Link>
+            <Pagination count={limitPage} onClick={e => fetchPageComics(+e.target.innerText)} />          
         </Container>
       </Grid>
     </Container>
